@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import RoomHeader from '../components/RoomHeader';
 import UserList from '../components/UserList';
 import CardSelection from '../components/CardSelection';
 import PhaseControls from '../components/PhaseControls';
 import VotingResults from '../components/VotingResults';
+import LastRoundModal from '../components/LastRoundModal';
 
 // Mock data for initial users
 const initialUsers = [
@@ -27,6 +27,9 @@ const Index = () => {
   const [currentPhase, setCurrentPhase] = useState<Phase>('voting');
   const [roomTitle, setRoomTitle] = useState('Sprint Planning - User Stories');
   const [currentUserId] = useState('1'); // Simulating current user
+  const [lastRoundUsers, setLastRoundUsers] = useState<User[]>([]);
+  const [lastRoundTitle, setLastRoundTitle] = useState('');
+  const [showLastRoundModal, setShowLastRoundModal] = useState(false);
 
   const handleVote = (value: number) => {
     setUsers(prev => prev.map(user => 
@@ -41,6 +44,11 @@ const Index = () => {
   };
 
   const handleNewRound = () => {
+    // Save current round as last round
+    setLastRoundUsers([...users]);
+    setLastRoundTitle(roomTitle);
+    
+    // Reset for new round
     setUsers(prev => prev.map(user => ({ 
       ...user, 
       vote: null, 
@@ -49,8 +57,13 @@ const Index = () => {
     setCurrentPhase('voting');
   };
 
+  const handleShowLastRound = () => {
+    setShowLastRoundModal(true);
+  };
+
   const currentUser = users.find(u => u.id === currentUserId);
   const allUsersVoted = users.length > 0 && users.every(u => u.hasVoted);
+  const hasLastRound = lastRoundUsers.length > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-blue-50 p-4">
@@ -85,11 +98,20 @@ const Index = () => {
               currentPhase={currentPhase}
               onReveal={handleReveal}
               onNewRound={handleNewRound}
+              onShowLastRound={handleShowLastRound}
               canReveal={allUsersVoted}
+              hasLastRound={hasLastRound}
             />
           </div>
         </div>
       </div>
+      
+      <LastRoundModal
+        isOpen={showLastRoundModal}
+        onClose={() => setShowLastRoundModal(false)}
+        lastRoundUsers={lastRoundUsers}
+        lastRoundTitle={lastRoundTitle}
+      />
     </div>
   );
 };
