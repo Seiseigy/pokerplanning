@@ -20,8 +20,8 @@ const PhaseControls = ({
   hasLastRound 
 }: PhaseControlsProps) => {
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20 p-5 shadow-sm">
-      <h3 className="font-medium text-slate-700 mb-4">Controls</h3>
+    <div className="bg-gradient-to-br from-orange-100 to-yellow-100 backdrop-blur-sm rounded-2xl border-2 border-orange-200 p-5 shadow-lg">
+      <h3 className="font-bold text-orange-800 mb-4 text-lg">🎮 Controls</h3>
       
       <div className="space-y-3">
         {currentPhase === 'voting' ? (
@@ -29,41 +29,41 @@ const PhaseControls = ({
             onClick={onReveal}
             disabled={!canReveal}
             className={`
-              w-full py-3 px-4 rounded-xl font-medium transition-all duration-200
-              flex items-center justify-center gap-2
+              w-full py-3 px-4 rounded-xl font-bold transition-all duration-200
+              flex items-center justify-center gap-2 text-lg
               ${canReveal
-                ? 'bg-sage-500 hover:bg-sage-600 text-white shadow-md hover:shadow-lg hover:scale-105'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:shadow-xl hover:scale-105'
+                : 'bg-slate-300 text-slate-500 cursor-not-allowed'
               }
             `}
           >
-            <Eye size={18} />
-            Reveal Votes
+            <Eye size={20} />
+            🔍 Reveal Votes
           </button>
         ) : (
           <button
             onClick={onNewRound}
-            className="w-full py-3 px-4 rounded-xl font-medium bg-blue-500 hover:bg-blue-600 text-white shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105"
+            className="w-full py-3 px-4 rounded-xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 text-lg"
           >
-            <RotateCcw size={18} />
-            New Round
+            <RotateCcw size={20} />
+            🔄 New Round
           </button>
         )}
         
         {hasLastRound && (
           <button
             onClick={onShowLastRound}
-            className="w-full py-2 px-4 rounded-xl font-medium bg-purple-100 hover:bg-purple-200 text-purple-700 border border-purple-200 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105"
+            className="w-full py-2 px-4 rounded-xl font-bold bg-gradient-to-r from-pink-200 to-rose-200 hover:from-pink-300 hover:to-rose-300 text-pink-800 border-2 border-pink-300 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105"
           >
             <History size={16} />
-            Last Round
+            📊 Last Round
           </button>
         )}
       </div>
       
-      <div className="mt-4 pt-4 border-t border-slate-200">
-        <div className="text-xs text-slate-500 text-center">
-          Phase: <span className="font-medium capitalize">{currentPhase}</span>
+      <div className="mt-4 pt-4 border-t-2 border-orange-200">
+        <div className="text-sm text-orange-700 text-center font-medium">
+          Phase: <span className="font-bold capitalize bg-orange-200 px-2 py-1 rounded-lg">{currentPhase}</span>
         </div>
       </div>
     </div>
@@ -71,3 +71,4 @@ const PhaseControls = ({
 };
 
 export default PhaseControls;
+
