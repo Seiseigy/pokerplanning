@@ -1,5 +1,3 @@
-
-
 interface CardSelectionProps {
   onVote: (value: number) => void;
   selectedValue: number | null;
@@ -8,23 +6,23 @@ interface CardSelectionProps {
 
 const fibonacciValues = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
 
-// Single bright color for all cards
+// Elegant single color palette for all cards
 const getCardColor = (isSelected: boolean, disabled: boolean) => {
   if (disabled) {
-    return 'from-slate-300 to-slate-400 border-slate-500 opacity-60';
+    return 'from-slate-200 to-slate-300 border-slate-400 opacity-50';
   }
   
   if (isSelected) {
-    return 'from-emerald-400 to-emerald-500 border-emerald-600 shadow-xl transform scale-110 ring-4 ring-emerald-200';
+    return 'from-indigo-500 to-blue-600 border-indigo-600 shadow-xl transform scale-110 ring-4 ring-indigo-100';
   }
   
-  return 'from-blue-400 to-blue-500 border-blue-600 hover:shadow-lg hover:scale-105 hover:from-blue-500 hover:to-blue-600';
+  return 'from-slate-600 to-slate-700 border-slate-600 hover:shadow-lg hover:scale-105 hover:from-indigo-400 hover:to-blue-500';
 };
 
 const CardSelection = ({ onVote, selectedValue, disabled }: CardSelectionProps) => {
   return (
-    <div className="bg-gradient-to-br from-purple-100 to-pink-100 backdrop-blur-sm rounded-2xl border-2 border-purple-200 p-6 shadow-lg">
-      <h3 className="text-xl font-bold text-purple-800 mb-6 text-center">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 p-6 shadow-lg">
+      <h3 className="text-xl font-semibold text-slate-700 mb-6 text-center">
         Select your estimate
       </h3>
       
@@ -35,7 +33,7 @@ const CardSelection = ({ onVote, selectedValue, disabled }: CardSelectionProps) 
             onClick={() => !disabled && onVote(value)}
             disabled={disabled}
             className={`
-              aspect-[3/4] rounded-xl border-3 transition-all duration-300 font-bold
+              aspect-[3/4] rounded-xl border-2 transition-all duration-300 font-bold
               flex items-center justify-center text-xl bg-gradient-to-br text-white
               ${getCardColor(selectedValue === value, disabled)}
               ${disabled 
@@ -51,8 +49,8 @@ const CardSelection = ({ onVote, selectedValue, disabled }: CardSelectionProps) 
       </div>
       
       {disabled && (
-        <p className="text-center text-lg font-medium text-purple-700 mt-4 animate-pulse">
-          🎯 Voting complete! Waiting for reveal...
+        <p className="text-center text-lg font-medium text-slate-600 mt-4">
+          Voting complete! Waiting for reveal...
         </p>
       )}
     </div>
@@ -60,4 +58,3 @@ const CardSelection = ({ onVote, selectedValue, disabled }: CardSelectionProps) 
 };
 
 export default CardSelection;
-
