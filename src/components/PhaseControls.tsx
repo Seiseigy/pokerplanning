@@ -1,38 +1,35 @@
-import { Phase } from '../pages/Index';
-import { Eye, RotateCcw, History } from 'lucide-react';
+import { GameState } from "@/types/planningPoker";
+import { Eye, RotateCcw, History } from "lucide-react";
 
 interface PhaseControlsProps {
-  currentPhase: Phase;
+  currentPhase: GameState;
   onReveal: () => void;
   onNewRound: () => void;
-  onShowLastRound: () => void;
   canReveal: boolean;
-  hasLastRound: boolean;
 }
 
-const PhaseControls = ({ 
-  currentPhase, 
-  onReveal, 
-  onNewRound, 
-  onShowLastRound, 
-  canReveal, 
-  hasLastRound 
+const PhaseControls = ({
+  currentPhase,
+  onReveal,
+  onNewRound,
+  canReveal,
 }: PhaseControlsProps) => {
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 p-5 shadow-lg">
       <h3 className="font-semibold text-slate-700 mb-4 text-lg">Controls</h3>
-      
+
       <div className="space-y-3">
-        {currentPhase === 'voting' ? (
+        {currentPhase === "voting" ? (
           <button
             onClick={onReveal}
             disabled={!canReveal}
             className={`
               w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200
               flex items-center justify-center gap-2 text-lg
-              ${canReveal
-                ? 'bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-105'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+              ${
+                canReveal
+                  ? "bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                  : "bg-slate-200 text-slate-400 cursor-not-allowed"
               }
             `}
           >
@@ -48,21 +45,14 @@ const PhaseControls = ({
             New Round
           </button>
         )}
-        
-        {hasLastRound && (
-          <button
-            onClick={onShowLastRound}
-            className="w-full py-2 px-4 rounded-xl font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105"
-          >
-            <History size={16} />
-            Last Round
-          </button>
-        )}
       </div>
-      
+
       <div className="mt-4 pt-4 border-t border-slate-200">
         <div className="text-sm text-slate-600 text-center font-medium">
-          Phase: <span className="font-semibold capitalize bg-slate-100 px-2 py-1 rounded-lg text-slate-700">{currentPhase}</span>
+          Phase:{" "}
+          <span className="font-semibold capitalize bg-slate-100 px-2 py-1 rounded-lg text-slate-700">
+            {currentPhase}
+          </span>
         </div>
       </div>
     </div>

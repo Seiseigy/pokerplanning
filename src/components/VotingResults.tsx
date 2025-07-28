@@ -1,9 +1,10 @@
 
+import { Game } from '@/types/planningPoker';
 import { User } from '../pages/Index';
 import { BarChart3 } from 'lucide-react';
 
 interface VotingResultsProps {
-  users: User[];
+  users: Game['players'];
 }
 
 const VotingResults = ({ users }: VotingResultsProps) => {

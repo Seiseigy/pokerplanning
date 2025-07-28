@@ -1,18 +1,14 @@
-
-import { useState, useEffect } from 'react';
-import RoomHeader from '../components/RoomHeader';
-import UserList from '../components/UserList';
-import CardSelection from '../components/CardSelection';
-import PhaseControls from '../components/PhaseControls';
-import VotingResults from '../components/VotingResults';
-import LastRoundModal from '../components/LastRoundModal';
-
-// Mock data for initial users
-const initialUsers = [
-  { id: '1', name: 'Alice Chen', vote: null, hasVoted: false },
-  { id: '2', name: 'Bob Johnson', vote: null, hasVoted: false },
-  { id: '3', name: 'Carol Davis', vote: null, hasVoted: false },
-];
+import { useState, useEffect } from "react";
+import RoomHeader from "../components/RoomHeader";
+import UserList from "../components/UserList";
+import CardSelection from "../components/CardSelection";
+import PhaseControls from "../components/PhaseControls";
+import VotingResults from "../components/VotingResults";
+// import LastRoundModal from "../components/LastRoundModal";
+import { useSocket } from "@/hooks/usePokerSocket";
+import { Game, GameState } from "@/types/planningPoker";
+import Join from "./Join";
+import Connecting from "@/components/Connecting";
 
 export type User = {
   id: string;
@@ -21,98 +17,57 @@ export type User = {
   hasVoted: boolean;
 };
 
-export type Phase = 'voting' | 'revealed';
-
 const Index = () => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
-  const [currentPhase, setCurrentPhase] = useState<Phase>('voting');
-  const [roomTitle, setRoomTitle] = useState('Sprint Planning - User Stories');
-  const [currentUserId] = useState('1'); // Simulating current user
-  const [lastRoundUsers, setLastRoundUsers] = useState<User[]>([]);
-  const [lastRoundTitle, setLastRoundTitle] = useState('');
-  const [showLastRoundModal, setShowLastRoundModal] = useState(false);
+  const { state, join, vote, reveal, reset, id } = useSocket();
 
-  const handleVote = (value: number) => {
-    setUsers(prev => prev.map(user => 
-      user.id === currentUserId 
-        ? { ...user, vote: value, hasVoted: true }
-        : user
-    ));
-  };
+  const [roomTitle, setRoomTitle] = useState("Sprint Planning - User Stories");
+  const [name, setName] = useState("");
 
-  const handleReveal = () => {
-    setCurrentPhase('revealed');
-  };
+  const currentUser = state?.players?.find((p) => p.id === id);
+  const allUsersVoted =
+    state?.players?.length > 0 && state?.players.every((u) => u.vote !== null);
 
-  const handleNewRound = () => {
-    // Save current round as last round
-    setLastRoundUsers([...users]);
-    setLastRoundTitle(roomTitle);
-    
-    // Reset for new round
-    setUsers(prev => prev.map(user => ({ 
-      ...user, 
-      vote: null, 
-      hasVoted: false 
-    })));
-    setCurrentPhase('voting');
-  };
-
-  const handleShowLastRound = () => {
-    setShowLastRoundModal(true);
-  };
-
-  const currentUser = users.find(u => u.id === currentUserId);
-  const allUsersVoted = users.length > 0 && users.every(u => u.hasVoted);
-  const hasLastRound = lastRoundUsers.length > 0;
+  if (!state) return <Connecting />;
+  if (!state.players.some((p) => p.id === id))
+    return <Join join={join} name={name} setName={setName} />;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4">
       <div className="max-w-6xl mx-auto">
-        <RoomHeader 
-          title={roomTitle} 
-          onTitleChange={setRoomTitle}
-        />
-        
+        <RoomHeader title={roomTitle} onTitleChange={setRoomTitle} />
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-8">
           {/* Main voting area */}
           <div className="lg:col-span-3 space-y-6">
-            <CardSelection 
-              onVote={handleVote}
+            <CardSelection
+              onVote={vote}
               selectedValue={currentUser?.vote || null}
-              disabled={currentPhase === 'revealed'}
+              disabled={state.state === "revealing"}
             />
-            
-            {currentPhase === 'revealed' && (
-              <VotingResults users={users} />
+
+            {state.state === "revealing" && (
+              <VotingResults users={state.players} />
             )}
           </div>
-          
+
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <UserList 
-              users={users} 
-              currentPhase={currentPhase}
-            />
-            
+            <UserList users={state.players} currentPhase={state.state} />
+
             <PhaseControls
-              currentPhase={currentPhase}
-              onReveal={handleReveal}
-              onNewRound={handleNewRound}
-              onShowLastRound={handleShowLastRound}
+              currentPhase={state.state}
+              onReveal={reveal}
+              onNewRound={reset}
               canReveal={allUsersVoted}
-              hasLastRound={hasLastRound}
             />
           </div>
         </div>
       </div>
-      
-      <LastRoundModal
+
+      {/* <LastRoundModal
         isOpen={showLastRoundModal}
         onClose={() => setShowLastRoundModal(false)}
-        lastRoundUsers={lastRoundUsers}
-        lastRoundTitle={lastRoundTitle}
-      />
+      /> */}
     </div>
   );
 };
