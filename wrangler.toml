@@ -7,12 +7,5 @@ name = "pastel-poker-planning"
 [env.preview]
 name = "pastel-poker-planning-preview"
 
-# Build configuration
-[build]
-command = "npm run build"
-cwd = "."
-watch_dir = "src"
-
-# Pages configuration
-[[pages_build_output_dir]]
-name = "dist"
+# Build configuration for Cloudflare Pages
+pages_build_output_dir = "dist"
