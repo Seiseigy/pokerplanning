@@ -1,73 +1,133 @@
-# Welcome to your Lovable project
+# 🃏 Poker Planning
 
-## Project info
+A beautiful and intuitive poker planning application for agile teams. Estimate user stories with ease using the Fibonacci sequence in a modern, collaborative interface.
 
-**URL**: https://lovable.dev/projects/2bdd16c0-9d8f-4062-ae31-ca453ae11de5
+## ✨ Features
 
-## How can I edit this code?
+- 🎨 Beautiful pastel design with smooth animations
+- 🃏 Fibonacci sequence estimation cards
+- 👥 Multi-user support with real-time voting
+- 📊 Voting results visualization
+- 🕒 Round history tracking
+- 📱 Responsive design for mobile and desktop
+- ⚡ Fast and lightweight React application
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Development
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2bdd16c0-9d8f-4062-ae31-ca453ae11de5) and start prompting.
+```bash
+# Install dependencies
+npm install
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Open http://localhost:8080
 ```
 
-**Edit a file directly in GitHub**
+### Production Build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Build for production
+npm run build
 
-**Use GitHub Codespaces**
+# Preview production build
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🌐 Deployment
 
-## What technologies are used for this project?
+This project is configured for deployment on Cloudflare Pages.
 
-This project is built with:
+### Automatic Deployment (Recommended)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Push your code to GitHub
+2. Connect your repository to Cloudflare Pages
+3. Set build command: `npm run build`
+4. Set output directory: `dist`
+5. Deploy automatically on every push
 
-## How can I deploy this project?
+### Manual Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/2bdd16c0-9d8f-4062-ae31-ca453ae11de5) and click on Share -> Publish.
+```bash
+# Install Wrangler CLI
+npm install -g wrangler
 
-## Can I connect a custom domain to my Lovable project?
+# Login to Cloudflare
+wrangler login
 
-Yes, you can!
+# Deploy to Cloudflare Pages
+npm run deploy
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🛠️ Tech Stack
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **State Management**: TanStack Query
+- **Routing**: React Router
+- **Real-time**: Socket.IO (optional)
+- **Deployment**: Cloudflare Pages
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── CardSelection.tsx
+│   ├── UserList.tsx
+│   ├── VotingResults.tsx
+│   └── ...
+├── pages/              # Page components
+│   ├── Index.tsx
+│   └── NotFound.tsx
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── main.tsx           # Application entry point
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file for local development:
+
+```env
+# Add your environment variables here
+VITE_API_URL=your_api_url_here
+```
+
+### Cloudflare Pages Configuration
+
+The project includes:
+- `wrangler.toml` for Wrangler configuration
+- `public/_redirects` for SPA routing
+- GitHub Actions workflow for automatic deployment
+
+## 📈 Performance
+
+- ⚡ Optimized bundle splitting
+- 🗜️ Minified production builds
+- 📦 Tree-shaking for smaller bundles
+- 🚀 Fast loading with modern web standards
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- Built with modern web technologies
+- Inspired by agile development practices
+- Designed for team collaboration
